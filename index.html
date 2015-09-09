@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+<script src="http://cdn.alloyui.com/3.0.1/aui/aui-min.js"></script>
+<link href="http://cdn.alloyui.com/3.0.1/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
+<style>
+.navbar.affix {
+  top: 60px;
+  width: 675px;
+  z-index: 200;
+}
+</style>
+<script>
+
+	YUI().use(
+  'aui-ace-editor',
+  function(Y) {
+    // code goes here
+  }
+);
+
+YUI().use(
+  'aui-affix',
+  function(Y) {
+    new Y.Affix(
+      {
+        target: '#myAffix',
+        offsetTop: 250
+      }
+    );
+  }
+);
+
+YUI().use(
+  'aui-ace-editor',
+  function(Y) {
+    new Y.AceEditor(
+      {
+        boundingBox: '#myEditor',
+        mode: 'xml',
+        value: '<body id="content"></body>'
+      }
+    ).render();
+  }
+);
+
+YUI().use(
+  'aui-diagram-builder',
+  function(Y) {
+
+    var availableFields = [
+      {
+        iconClass: 'diagram-node-start-icon',
+        label: 'Start',
+        type: 'start'
+      },
+      {
+        iconClass: 'diagram-node-task-icon',
+        label: 'Task',
+        type: 'task'
+      },
+      {
+        iconClass: 'diagram-node-state-icon',
+        label: 'State',
+        type: 'state'
+      },
+      {
+        iconClass: 'diagram-node-join-icon',
+        label: 'Join',
+        type: 'join'
+      },
+      {
+        iconClass: 'diagram-node-fork-icon',
+        label: 'Fork',
+        type: 'fork'
+      },
+      {
+        iconClass: 'diagram-node-condition-icon',
+        label: 'Condition',
+        type: 'condition'
+      },
+      {
+        iconClass: 'diagram-node-end-icon',
+        label: 'End',
+        type: 'end'
+      }
+    ];
+
+    var diagramBuilder = new Y.DiagramBuilder (
+      {
+        availableFields: availableFields,
+        boundingBox: '#diagram-builder-bb',
+        fields: [
+          {
+            name: 'StartNode',
+            type: 'start',
+            xy: [10, 10]
+          },
+          {
+            name: 'Condition',
+            type: 'condition',
+            xy: [260, 16]
+          },
+          {
+            name: 'Fork',
+            type: 'fork',
+            xy: [183, 99]
+          },
+          {
+            name: 'Task1',
+            type: 'task',
+            xy: [38, 158]
+          },
+          {
+            name: 'Task2',
+            type: 'task',
+            xy: [262, 221]
+          },
+          {
+            name: 'Join',
+            type: 'join',
+            xy: [99, 300]
+          },
+          {
+            name: 'State',
+            type: 'state',
+            xy: [287, 377]
+          },
+          {
+            name: 'Task3',
+            type: 'task',
+            xy: [100, 444]
+          },
+          {
+            name: 'EndNode',
+            type: 'end',
+            xy: [326, 500]
+          }
+        ],
+        render: true,
+        srcNode: '#diagram-builder-sn'
+      }
+    );
+
+    diagramBuilder.connectAll(
+      [
+        {
+          connector: {
+            name: 'TaskConnector1'
+          },
+          source: 'StartNode',
+          target: 'Condition'
+        },
+        {
+          connector: {
+            name: 'TaskConnector2'
+          },
+          source: 'Condition',
+          target: 'Fork'
+        },
+        {
+          connector: {
+            name: 'TaskConnector3'
+          },
+          source: 'Fork',
+          target: 'Task1'
+        },
+        {
+          connector: {
+            name: 'TaskConnector4'
+          },
+          source: 'Fork',
+          target: 'Task2'
+        },
+        {
+          connector: {
+            name: 'TaskConnector5'
+          },
+          source: 'Task1',
+          target: 'Join'
+        },
+        {
+          connector: {
+            name: 'TaskConnector6'
+          },
+          source: 'Task2',
+          target: 'Join'
+        },
+        {
+          connector: {
+            name: 'TaskConnector7'
+          },
+          source: 'Join',
+          target: 'State'
+        },
+        {
+          connector: {
+            name: 'TaskConnector8'
+          },
+          source: 'State',
+          target: 'Task3'
+        },
+        {
+          connector: {
+            name: 'TaskConnector9'
+          },
+          source: 'Task3',
+          target: 'EndNode'
+        }
+      ]
+    );
+  }
+);
+</script>
+		<title></title>
+	</head>
+	<body>
+<div id="myAffix" class="navbar navbar-default">
+  <ul class="nav navbar-nav">
+    <li><a href="#">Item 1</a></li>
+    <li><a href="#">Item 2</a></li>
+    <li><a href="#">Item 3</a></li>
+  </ul>
+</div>
+
+
+
+
+
+	<div id="myEditor" style=""></div>	
+	
+<div id="diagram-builder-bb">
+  <div id="diagram-builder-sn"></div>
+</div>	
+	
+	</body>
+</html>
